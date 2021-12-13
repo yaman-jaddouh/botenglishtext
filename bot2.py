@@ -51,7 +51,7 @@ def add_chat_id(chat_id):
 #         data["groupe_or_channel_of_users"][str(user_id)]=lis[str(group_or_channel_id)]
 
     
-channel_to_sub = "@Englishvibesnow"
+channel_to_sub = "@english_botss"
 bot = telebot.TeleBot('5081120757:AAHnN8FKIi0MoyEDB_LVP0xurTuwIERbUwk')
 
 hello_message = """
