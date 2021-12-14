@@ -53,8 +53,6 @@ def add_chat_id(chat_id):
     #Englishvibesnow
 channel_to_sub = "@Englishvibesnow"
 bot = telebot.TeleBot('5081120757:AAHnN8FKIi0MoyEDB_LVP0xurTuwIERbUwk')
-# channel_to_sub ='@english_botss'
-# bot = telebot.TeleBot('1919018669:AAHrFKzznfWMRwP2vjbpG1GoJmRR6Ihmaz4')
 hello_message = """
 مرحبا بك في بوت إنجلش ڤايبز الناطق بالإنجليزية!
 
