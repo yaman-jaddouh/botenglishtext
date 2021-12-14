@@ -3,7 +3,7 @@ import telebot
 import json
 import gtts
 from textblob import TextBlob
-admins =["1961668796" , "989490846" , "7616867","461929045" ,"880941250"]
+admins =["1961668796" , "989490846" , "7616867" ,"880941250"]
 all_data = { 
     "user_id":[], 
     "joined_channel":[],
@@ -53,7 +53,8 @@ def add_chat_id(chat_id):
     #Englishvibesnow
 channel_to_sub = "@Englishvibesnow"
 bot = telebot.TeleBot('5081120757:AAHnN8FKIi0MoyEDB_LVP0xurTuwIERbUwk')
-
+# channel_to_sub ='@english_botss'
+# bot = telebot.TeleBot('1919018669:AAHrFKzznfWMRwP2vjbpG1GoJmRR6Ihmaz4')
 hello_message = """
 مرحبا بك في بوت إنجلش ڤايبز الناطق بالإنجليزية!
 
@@ -100,7 +101,7 @@ def channel(message):
                 file_name = txt_2_speech
             tts.save("{}.mp3".format(file_name))
             audio_file = open("{}.mp3".format(file_name),'rb')
-            bot.send_document(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
+            bot.send_voice(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
             audio_file.close()
             remove("{}.mp3".format(file_name))
         else:
@@ -121,30 +122,33 @@ def start(message):
 @bot.message_handler(commands=['say'])
 def read_text(message):
     try:
-        state = bot.get_chat_member(channel_to_sub ,message.from_user.id).status
-        state =  state!="left"
-        state =True
-        if state :
-            file_name = ""
-            txt_2_speech = message.text.replace("/say","")
-            print(len(txt_2_speech))
-            language = TextBlob(txt_2_speech)
-            language = str(language.detect_language())
-            if language =="en":
-                tts = gtts.gTTS(txt_2_speech,lang='en')
-                if len(txt_2_speech.strip().split(' ')) > 1:
-                    file_name = "Sentence"
+        if message.chat.type !="private":
+            state = bot.get_chat_member(channel_to_sub ,message.from_user.id).status
+            state =  state!="left"
+            state =True
+            if state :
+                file_name = ""
+                txt_2_speech = message.text.replace("/say","")
+                print(len(txt_2_speech))
+                language = TextBlob(txt_2_speech)
+                language = str(language.detect_language())
+                if language =="en":
+                    tts = gtts.gTTS(txt_2_speech,lang='en')
+                    if len(txt_2_speech.strip().split(' ')) > 1:
+                        file_name = "Sentence"
+                    else:
+                        file_name = txt_2_speech
+                    tts.save("{}.mp3".format(file_name))
+                    audio_file = open("{}.mp3".format(file_name),'rb')
+                    bot.send_voice(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
+                    audio_file.close()
+                    remove("{}.mp3".format(file_name))
                 else:
-                    file_name = txt_2_speech
-                tts.save("{}.mp3".format(file_name))
-                audio_file = open("{}.mp3".format(file_name),'rb')
-                bot.send_document(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
-                audio_file.close()
-                remove("{}.mp3".format(file_name))
-            else:
-                bot.send_message(message.chat.id, just_english ,reply_to_message_id=message.message_id)
-        else : 
-            bot.send_message(message.chat.id , channel_link)
+                    bot.send_message(message.chat.id, just_english ,reply_to_message_id=message.message_id)
+            else : 
+                bot.send_message(message.chat.id , channel_link)
+        else:
+            bot.send_message(message.chat.id , "قم بإرسال الرسالة بدون /say ")
     except:
         pass
 
@@ -226,7 +230,9 @@ def reply_message(message):
     try:
         if message.chat.type =='private'  :
             state = bot.get_chat_member(channel_to_sub ,message.from_user.id).status
+            print(state)
             state =  state!="left"
+            
             if str(message.from_user.id) in admins or state:
                 file_name=""
                 txt_2_speech = message.text 
@@ -245,7 +251,7 @@ def reply_message(message):
                         file_name = txt_2_speech
                     tts.save("{}.mp3".format(file_name))
                     audio_file = open("{}.mp3".format(file_name),'rb')
-                    bot.send_document(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
+                    bot.send_voice(message.chat.id ,audio_file,reply_to_message_id=message.message_id)
                     audio_file.close()
                     remove("{}.mp3".format(file_name))
                 else:
